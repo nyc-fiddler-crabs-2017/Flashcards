@@ -1,0 +1,5 @@
+<% @decks.each do |deck| %>
+<br>
+  <a href="/decks/<%= deck.id %>"><%= deck.title %></a>
+  <br>
+<% end %>
