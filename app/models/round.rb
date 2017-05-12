@@ -6,7 +6,7 @@ validates :deck, :user, presence: true
 
 
   def card_filter(round, array)
-    round.deck.cards.each do |card|
+    array.each do |card|
       card.guesses.each do |guess|
         if card.answer == guess.attempt &&
           round.id == guess.round_id

@@ -1,3 +1,3 @@
 get '/' do
-  redirect '/decks/new'
+  redirect '/decks'
 end
