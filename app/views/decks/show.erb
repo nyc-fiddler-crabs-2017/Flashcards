@@ -1,0 +1,24 @@
+<h1><%= @deck.title %></h1>
+<br>
+<% if @response == "correct" %>
+  Correct
+<% else %>
+incorrect
+<% end %>
+
+<% @deck.cards.each do |card| %>
+<form class="" action="/decks/<%= @decks.id %>/cards/<%= card.id %>" method="post">
+  <%= card.question %>
+  <input type="text" name="answer">
+  <input type="submit" value="submit">
+</form>
+<% end %>
+
+
+<% @filtered.each do |card| %>
+  <form class="" action="/decks/<%= @decks.id %>/cards/<%= card.id %>" method="post">
+    <%= card.question %>
+    <input type="text" name="answer">
+    <input type="submit" value="submit">
+  </form>
+<% end %>
