@@ -1,0 +1,9 @@
+<h1>Make a new Deck</h1>
+
+<%= erb :'_errors' %>
+<br>
+<form action="/decks" method="post">
+  <input type="text" name="title" placeholder="Title Here">
+  <br>
+  <input type="submit" value="Submit">
+</form>
