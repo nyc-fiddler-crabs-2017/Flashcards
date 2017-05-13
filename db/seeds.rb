@@ -1,16 +1,18 @@
 Deck.create(title: 'Nighthawk Flashcards')
 
-nighthawk_cards = [ {question: 'What is a nighthawks primary food source?', answer: 'insects', deck_id: 1},
-  {question: 'True or false?  Nighthawks are closely related to hawks.', answer: 'false', deck_id: 1}, {question: 'True or false?  Nighthawks make nests.', answer: 'false', deck_id: 1}
+nighthawk_cards = [
+  {question: 'What is a nighthawks primary food source?', answer: 'insects', deck_id: 1},
+  {question: 'True or false?  Nighthawks are closely related to hawks.', answer: 'false', deck_id: 1},
+  {question: 'True or false?  Nighthawks make nests.', answer: 'false', deck_id: 1}
 ]
 
 Card.create!(nighthawk_cards)
 Deck.create(title: 'Otter Flashcards')
 
-otter_cards = [ {question: "What is an otter's primary food source?
-", answer: 'fish', deck_id: 2},
-  {question: 'True or false? Otters spend the majority of their time on land.
-', answer: 'true', deck_id: 2}, {question: 'How many species of otters are there?', answer: '13', deck_id: 2}
+otter_cards = [
+  {question: "What is an otter's primary food source?", answer: 'fish', deck_id: 2},
+  {question: 'True or false? Otters spend the majority of their time on land.', answer: 'true', deck_id: 2},
+  {question: 'How many species of otters are there?', answer: '13', deck_id: 2}
 ]
 
 Card.create!(otter_cards)

@@ -1,10 +1,5 @@
 <%= erb :'_errors' %>
-  <form action="/decks/<%= @deck %>/cards/7" method="post">
-    <% if @user_response == "correct" %>
-      Correct
-    <% else %>
-    incorrect
-    <% end %>
+  <form action="/decks/<%= @deck.id %>/cards/<%= @question.id %>" method="post">
     <br>
     <%= @question.question%>
     <input type="text" name="answer">

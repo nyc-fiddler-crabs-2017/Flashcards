@@ -4,3 +4,20 @@ get '/rounds/:id' do
   @filtered = card_filter(@round, @cards_array)
   erb :"/decks/#{@round.deck.id}"
 end
+
+post '/rounds' do
+  if is_logged_in?
+    @round = Round.new(user_id: session[:user_id], deck_id: params.keys)
+    if @round.save
+      @deck = Deck.find_by(id: params.keys)
+      @question = @deck.cards[rand(@deck.cards.length)]
+      erb :'/decks/show'
+    else
+      @errors = @round.errors.full_messages
+      @decks = Deck.all
+      erb :'index'
+    end
+  else
+    redirect '/'
+  end
+end

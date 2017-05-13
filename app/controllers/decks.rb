@@ -18,42 +18,6 @@ post '/cards' do
   end
 end
 
-
-
-get '/decks/:id' do
-  @round = Round.find_by(user_id: session[:user_id], deck_id: params[:id])
-  @deck = @round.deck_id
-  @cards_array = @round.deck.cards
-  @filtered = @round.card_filter(@round, @cards_array)
-  @question = @filtered[0]
-  erb :'/decks/show'
-end
-
-post '/decks/:deck_id/cards/:card_id' do
-  @guess = Guess.new(attempt: params[:answer])
-  @deck = Deck.find_by(id: params[:deck_id])
-  @card = Card.find_by(id: params[:card_id])
-  if @guess.save
-    @card.guesses.each do |guess|
-      if guess.attempt == @card.answer
-        @user_response = "correct"
-        erb :'/decks/show'
-      else
-        @user_response = "incorrect"
-        erb :'/decks/show'
-      end
-    end
-  else
-    @errors = @guess.errors.full_messages
-    erb :'/decks/show'
-  end
-end
-
-get '/decks/:id/edit' do
-  @deck = Deck.find_by(id: params[:id])
-  erb :'/decks/edit'
-end
-
 post '/decks' do
   @deck = Deck.new(title: params[:title])
   if @deck.save
@@ -64,6 +28,39 @@ post '/decks' do
   end
 end
 
+get '/decks/:id' do
+  # @round = Round.where(user_id: session[:user_id], deck_id: params[:id]).last
+  # # binding.pry
+  # @deck = @round.deck_id
+  # @cards_array = @round.deck.cards
+  # # @filtered = @round.card_filter(@round, @cards_array)
+  # @question = @cards_array[rand(@cards_array.length)]
+  erb :'/decks/show'
+end
+
+post '/decks/:deck_id/cards/:card_id' do
+  @round = Round.all.last
+  @guess = Guess.new(attempt: params[:answer], card_id: params[:card_id], round_id: @round.id)
+  @deck = Deck.find_by(id: params[:deck_id])
+  @card = Card.find_by(id: params[:card_id])
+  if @guess.save
+      if @round.guesses.last.attempt == @card.answer
+        @question = @deck.cards[rand(@deck.cards.length)]
+        erb :'/decks/show'
+      else
+    
+        erb :'/decks/show'
+      end
+  else
+    @errors = @guess.errors.full_messages
+    erb :'/decks/show'
+  end
+end
+
+get '/decks/:id/edit' do
+  @deck = Deck.find_by(id: params[:id])
+  erb :'/decks/edit'
+end
 
 put '/decks/:id' do
   @deck = Deck.find_by(id: params[:id])
