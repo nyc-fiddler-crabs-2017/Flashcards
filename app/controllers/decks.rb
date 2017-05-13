@@ -39,18 +39,16 @@ get '/decks/:id' do
 end
 
 post '/decks/:deck_id/cards/:card_id' do
-  @round = Round.where(user_id: session[:user_id], deck_id: params[:deck_id]).last
+  @round = Round.all.last
   @guess = Guess.new(attempt: params[:answer], card_id: params[:card_id], round_id: @round.id)
-  @deck = params[:deck_id]
+  @deck = Deck.find_by(id: params[:deck_id])
   @card = Card.find_by(id: params[:card_id])
   if @guess.save
-      if @round.guesses.last.attempt == @question.answer
-        @round.deck.cards.delete(@card)
+      if @round.guesses.last.attempt == @card.answer
+        @question = @deck.cards[rand(@deck.cards.length)]
         erb :'/decks/show'
       else
-        @user_response = "incorrect"
-        @filtered = @round.card_filter(@round, @cards_array)
-        @question = @filtered[rand(@filtered.length)]
+    
         erb :'/decks/show'
       end
   else

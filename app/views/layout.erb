@@ -20,6 +20,8 @@
 <body>
     <a href="/">Home</a>
     <br>
+    <% erb :'_errors' %>
+    <br>
   <% if is_logged_in? %>
     <form action="/logout" method="post">
       <input type="hidden" name="_method" value="delete">

@@ -6,14 +6,18 @@ get '/rounds/:id' do
 end
 
 post '/rounds' do
-  @round = Round.new(user_id: session[:user_id],
-                     deck_id: params.keys)
-  if @round.save
-    @deck = Deck.find_by(id: params.keys)
-    @question = @deck.cards[rand(@deck.cards.length)]
-    erb :'/decks/show'
+  if is_logged_in?
+    @round = Round.new(user_id: session[:user_id], deck_id: params.keys)
+    if @round.save
+      @deck = Deck.find_by(id: params.keys)
+      @question = @deck.cards[rand(@deck.cards.length)]
+      erb :'/decks/show'
+    else
+      @errors = @round.errors.full_messages
+      @decks = Deck.all
+      erb :'index'
+    end
   else
-    @errors = @round.errors.full_messages
-    erb :'index'
+    redirect '/'
   end
 end
