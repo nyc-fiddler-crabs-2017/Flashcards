@@ -1,3 +1,4 @@
 get '/' do
-  redirect '/decks'
+  @decks = Deck.all
+  erb :'index'
 end

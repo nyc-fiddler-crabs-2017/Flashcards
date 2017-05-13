@@ -29,12 +29,12 @@ post '/decks' do
 end
 
 get '/decks/:id' do
-  @round = Round.where(user_id: session[:user_id], deck_id: params[:id]).last
-  # binding.pry
-  @deck = @round.deck_id
-  @cards_array = @round.deck.cards
-  # @filtered = @round.card_filter(@round, @cards_array)
-  @question = @cards_array[rand(@cards_array.length)]
+  # @round = Round.where(user_id: session[:user_id], deck_id: params[:id]).last
+  # # binding.pry
+  # @deck = @round.deck_id
+  # @cards_array = @round.deck.cards
+  # # @filtered = @round.card_filter(@round, @cards_array)
+  # @question = @cards_array[rand(@cards_array.length)]
   erb :'/decks/show'
 end
 

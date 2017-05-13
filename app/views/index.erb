@@ -1,0 +1,10 @@
+<%= erb :'_errors' %>
+
+<h1>Start a new round</h1>
+<% @decks.each do |deck| %>
+<br>
+<form class="" action="/rounds" method="post">
+  <input type="submit" name="<%= deck.id %>" value="<%= deck.title %>">
+</form>
+<br>
+<% end %>
