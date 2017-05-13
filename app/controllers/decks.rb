@@ -29,29 +29,30 @@ post '/decks' do
 end
 
 get '/decks/:id' do
-  @round = Round.where(user_id: session[:user_id], deck_id: params[:id])
-  p @round
-  # @deck = @round.deck_id
-  # @cards_array = @round.deck.cards
+  @round = Round.where(user_id: session[:user_id], deck_id: params[:id]).last
+  # binding.pry
+  @deck = @round.deck_id
+  @cards_array = @round.deck.cards
   # @filtered = @round.card_filter(@round, @cards_array)
-  # @question = @filtered[0]
-  # erb :'/decks/show'
+  @question = @cards_array[rand(@cards_array.length)]
+  erb :'/decks/show'
 end
 
 post '/decks/:deck_id/cards/:card_id' do
-  @guess = Guess.new(attempt: params[:answer])
-  @deck = Deck.find_by(id: params[:deck_id])
+  @round = Round.where(user_id: session[:user_id], deck_id: params[:deck_id]).last
+  @guess = Guess.new(attempt: params[:answer], card_id: params[:card_id], round_id: @round.id)
+  @deck = params[:deck_id]
   @card = Card.find_by(id: params[:card_id])
   if @guess.save
-    @card.guesses.each do |guess|
-      if guess.attempt == @card.answer
-        @user_response = "correct"
+      if @round.guesses.last.attempt == @question.answer
+        @round.deck.cards.delete(@card)
         erb :'/decks/show'
       else
         @user_response = "incorrect"
+        @filtered = @round.card_filter(@round, @cards_array)
+        @question = @filtered[rand(@filtered.length)]
         erb :'/decks/show'
       end
-    end
   else
     @errors = @guess.errors.full_messages
     erb :'/decks/show'
